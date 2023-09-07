@@ -1,5 +1,6 @@
 package whatever.headfirst.domain.auth.application;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import whatever.headfirst.domain.auth.exception.KakaoTokenException;
 import whatever.headfirst.domain.member.domain.Member;
@@ -34,20 +36,21 @@ public class AuthService {
         ResponseEntity<String> userInfo = accessKakao(request, KAKAO_URL);
         ObjectMapper objectMapper = new ObjectMapper();
 
+        JsonNode jsonNode = null;
         try {
-            JsonNode jsonNode = objectMapper.readTree(userInfo.getBody());
-
-            Long uuid = Long.valueOf(extractKakaoInfo(jsonNode, "id"));
-            String nickname = extractKakaoInfo(jsonNode, "properties", "nickname");
-            String email = extractKakaoInfo(jsonNode, "kakao_account", "email");
-
-            Member member = memberRepository.findByUuid(uuid).orElseGet(() -> createMember(uuid, nickname, email));
-            String token = tokenProvider.createToken(member);
-
-            return TokenResponse.from(token);
-        } catch (IOException e) {
+            jsonNode = objectMapper.readTree(userInfo.getBody());
+        } catch (JsonProcessingException e) {
             throw new KakaoTokenException();
         }
+
+        Long uuid = Long.valueOf(extractKakaoInfo(jsonNode, "id"));
+        String nickname = extractKakaoInfo(jsonNode, "properties", "nickname");
+        String email = extractKakaoInfo(jsonNode, "kakao_account", "email");
+
+        Member member = memberRepository.findByUuid(uuid).orElseGet(() -> createMember(uuid, nickname, email));
+        String token = tokenProvider.createToken(member);
+
+        return TokenResponse.from(token);
     }
 
     private static ResponseEntity<String> accessKakao(MemberLoginRequest request, String url) {

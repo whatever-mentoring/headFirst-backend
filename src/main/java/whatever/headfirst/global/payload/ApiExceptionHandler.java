@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 import whatever.headfirst.global.error.ErrorCode;
 
 @RestControllerAdvice(annotations = RestController.class)
@@ -35,6 +36,18 @@ public class ApiExceptionHandler {
                         HttpStatus.BAD_REQUEST,
                         e.getClass().getSimpleName(),
                         ErrorCode.UNVALID_DTO
+                ));
+    }
+
+    @ExceptionHandler(HttpClientErrorException.class)
+    public ResponseEntity<ApiErrorResponse> errorResponse(HttpClientErrorException e) {
+
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(ApiErrorResponse.of(
+                        HttpStatus.BAD_REQUEST,
+                        e.getClass().getSimpleName(),
+                        ErrorCode.KAKAO_EXCEPTION
                 ));
     }
 }
