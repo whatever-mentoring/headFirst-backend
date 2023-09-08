@@ -13,7 +13,8 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 public enum ErrorCode {
 
     UNVALID_DTO(BAD_REQUEST, "DTO 값 오류"),
-    MEMBER_NOT_FOUND(NOT_FOUND, "멤버가 없습니다.");
+    MEMBER_NOT_FOUND(NOT_FOUND, "멤버가 없습니다."),
+    KAKAO_EXCEPTION(BAD_REQUEST, "KAKAO 토큰과 관련된 예외가 발생했습니다.");
 
     private final HttpStatus status;
     private final String message;

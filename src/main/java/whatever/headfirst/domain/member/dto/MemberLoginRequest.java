@@ -1,11 +1,11 @@
 package whatever.headfirst.domain.member.dto;
 
-import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 
 @Getter
 public class MemberLoginRequest {
 
-    @Valid
-    private Long uuid;
+    @NotEmpty
+    private String token;
 }

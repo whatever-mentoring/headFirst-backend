@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import whatever.headfirst.domain.auth.application.AuthService;
-import whatever.headfirst.domain.member.domain.Member;
 import whatever.headfirst.domain.member.dto.MemberLoginRequest;
-import whatever.headfirst.domain.member.dto.MemberRequest;
-import whatever.headfirst.domain.member.dto.MemberResponse;
 import whatever.headfirst.domain.token.dto.TokenResponse;
 import whatever.headfirst.global.payload.ApiSuccessResponse;
 
@@ -22,12 +19,6 @@ import whatever.headfirst.global.payload.ApiSuccessResponse;
 public class AuthController {
 
     private final AuthService authService;
-
-    @PostMapping("/signup")
-    public ResponseEntity<ApiSuccessResponse<MemberResponse>> join(@RequestBody @Valid MemberRequest request) {
-        Member resultMember = authService.signup(request);
-        return ApiSuccessResponse.result(HttpStatus.OK, resultMember.toDto());
-    }
 
     @PostMapping("/login")
     public ResponseEntity<ApiSuccessResponse<TokenResponse>> login(@RequestBody @Valid MemberLoginRequest request) {
