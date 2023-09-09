@@ -23,7 +23,7 @@ import whatever.headfirst.global.jwt.TokenProvider;
 import java.io.IOException;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class AuthService {
 
@@ -42,12 +42,11 @@ public class AuthService {
         } catch (JsonProcessingException e) {
             throw new KakaoTokenException();
         }
-
         Long uuid = Long.valueOf(extractKakaoInfo(jsonNode, "id"));
         String nickname = extractKakaoInfo(jsonNode, "properties", "nickname");
         String email = extractKakaoInfo(jsonNode, "kakao_account", "email");
 
-        Member member = memberRepository.findByUuid(uuid).orElseGet(() -> createMember(uuid, nickname, email));
+        Member member = memberRepository.findByUuid(uuid).orElseGet(() -> createMember(uuid, email, nickname));
         String token = tokenProvider.createToken(member);
 
         return TokenResponse.from(token);
@@ -82,12 +81,8 @@ public class AuthService {
 
     @Transactional
     public Member createMember(Long uuid, String email, String nickname) {
-        Member createMember = Member
-                                .builder()
-                                .uuid(uuid)
-                                .email(email)
-                                .nickname(nickname)
-                                .build();
+        System.out.println("email = " + email);
+        Member createMember = Member.from(uuid, email, nickname);
         return memberRepository.save(createMember);
     }
 }
