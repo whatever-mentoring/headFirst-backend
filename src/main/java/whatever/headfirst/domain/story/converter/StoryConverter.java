@@ -42,6 +42,7 @@ public class StoryConverter {
                             .title(story.getTitle())
                             .content(story.getContent())
                             .status(story.getStatus())
+                            .createdAt(story.getCreatedAt())
                             .latitude(story.getLatitude())
                             .longitude(story.getLongitude())
                             .build();

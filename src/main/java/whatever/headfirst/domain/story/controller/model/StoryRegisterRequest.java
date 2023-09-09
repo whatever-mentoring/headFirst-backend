@@ -22,9 +22,6 @@ public class StoryRegisterRequest {
     private String content;
 
     @NotNull
-    private LocalDateTime createdAt;
-
-    @NotNull
     private double latitude;
 
     @NotNull
