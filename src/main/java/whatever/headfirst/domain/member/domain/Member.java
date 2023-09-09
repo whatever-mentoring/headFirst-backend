@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import whatever.headfirst.domain.common.BaseEntity;
@@ -31,7 +30,6 @@ public class Member extends BaseEntity {
         this.nickname = nickname;
     }
 
-    @Builder
     public static Member from(Long uuid, String email, String nickname) {
         return new Member(uuid, email, nickname);
     }

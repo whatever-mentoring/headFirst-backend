@@ -40,8 +40,8 @@ public class JwtFilter extends GenericFilterBean {
             Authentication authentication = tokenProvider.getAuthentication(jwt);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             User user = (User) authentication.getPrincipal();
-            Long uuid = Long.parseLong(user.getUsername());
-            Member targetMember = memberRepository.findByUuid(uuid)
+            String nickname = user.getUsername();
+            Member targetMember = memberRepository.findByNickname(nickname)
                     .orElseThrow(MemberNotFoundException::new);
             MemberContextHolder.setMember(targetMember);
             log.info("Security Context에 '{}' 인증 정보 저장, uri = {}", authentication.getName(), requestURI);
