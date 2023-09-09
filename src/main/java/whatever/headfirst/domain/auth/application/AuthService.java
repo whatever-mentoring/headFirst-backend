@@ -23,7 +23,7 @@ import whatever.headfirst.global.jwt.TokenProvider;
 import java.io.IOException;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class AuthService {
 
