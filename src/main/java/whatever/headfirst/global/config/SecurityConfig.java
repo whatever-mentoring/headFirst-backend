@@ -59,7 +59,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers("/auth/**").permitAll();
                     request.requestMatchers("onboard/**").permitAll();
-                    request.anyRequest().permitAll();
+                    request.anyRequest().authenticated();
                 })
                 .addFilterBefore(
                         new JwtFilter(tokenProvider, memberRepository), UsernamePasswordAuthenticationFilter.class
