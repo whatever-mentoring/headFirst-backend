@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import whatever.headfirst.domain.member.domain.Member;
 import whatever.headfirst.domain.story.entity.enums.StoryStatus;
 
 import java.awt.*;
@@ -17,6 +18,8 @@ import java.time.LocalDateTime;
 public class StoryResponse {
 
     private Long id;
+
+    private Long memberId;
 
     private String title;
 

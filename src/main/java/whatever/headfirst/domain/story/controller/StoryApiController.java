@@ -5,14 +5,19 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import whatever.headfirst.domain.story.business.StoryBusiness;
 import whatever.headfirst.domain.story.controller.model.StoryRegisterRequest;
 import whatever.headfirst.domain.story.controller.model.StoryResponse;
 import whatever.headfirst.global.payload.ApiSuccessResponse;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,15 +26,25 @@ public class StoryApiController {
 
     private final StoryBusiness storyBusiness;
 
+    // 사연 등록.
     @PostMapping("/register")
     public ResponseEntity<ApiSuccessResponse<StoryResponse>> register(
             @Valid
             @RequestBody StoryRegisterRequest request
     ) {
 
-        var response = storyBusiness.register(request); // StoryRegisterRequest 객체를 인수로 전달
+        var response = storyBusiness.register(request);
 
         return ApiSuccessResponse.result(HttpStatus.CREATED, response);
 
+    }
+
+    // 사연 전체 조회.
+    @GetMapping("/search/{memberId}")
+    public ResponseEntity<ApiSuccessResponse<List<StoryResponse>>> search(
+            @PathVariable Long memberId) {
+        var response = storyBusiness.search(memberId);
+
+        return ApiSuccessResponse.result(HttpStatus.OK, response);
     }
 }
