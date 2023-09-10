@@ -8,6 +8,7 @@ import whatever.headfirst.domain.story.entity.enums.StoryStatus;
 import whatever.headfirst.domain.story.exception.StoryNotFoundException;
 import whatever.headfirst.domain.story.repository.StoryRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -22,6 +23,14 @@ public class StoryService {
     public Story getStoryWithThrow(Long id) {
         var entity = storyRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoryStatus.CREATED);
         return entity.orElseThrow(StoryNotFoundException::new);
+
+    }
+
+    // 특정 유저가 작성한 모든 사연 가져오기.
+    public List<Story> getStoryByMemberId(Long memberId) {
+        var list = storyRepository.findAllByMemberIdAndStatusOrderByCreatedAtDesc(memberId, StoryStatus.CREATED);
+
+        return list;
 
     }
 

@@ -1,6 +1,7 @@
 package whatever.headfirst.domain.story.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import whatever.headfirst.domain.member.domain.Member;
 import whatever.headfirst.domain.story.entity.enums.StoryStatus;
 import whatever.headfirst.domain.story.entity.Story;
 
@@ -17,7 +18,5 @@ public interface StoryRepository extends JpaRepository<Story,Long> {
 
     // 유효한 편지 리스트
     // select * from store where status = ? order by desc
-    List<Story> findAllByStatusOrderByCreatedAtDesc(StoryStatus status);
-
-
+    List<Story> findAllByMemberIdAndStatusOrderByCreatedAtDesc(Long memberId, StoryStatus status);
 }
