@@ -51,6 +51,6 @@ public class Comment extends BaseEntity {
     }
 
     public CommentResponse toDto() {
-        return CommentResponse.from(this.content, this.member, this.story);
+        return CommentResponse.from(this.id, this.content, this.member, this.story);
     }
 }
