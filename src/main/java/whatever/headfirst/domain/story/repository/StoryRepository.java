@@ -20,5 +20,5 @@ public interface StoryRepository extends JpaRepository<Story,Long> {
     // select * from store where status = ? order by desc
     List<Story> findAllByMemberIdAndStatusOrderByCreatedAtDesc(Long memberId, StoryStatus status);
 
-    List<Story> findAllByKeywordAndStatusOrderByCreatedAtDesc(String keyword, StoryStatus status);
+    List<Story> findAllByKeywordLikeAndStatusOrderByCreatedAtDesc(String keyword, StoryStatus status);
 }

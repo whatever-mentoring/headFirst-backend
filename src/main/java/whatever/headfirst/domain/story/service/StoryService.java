@@ -36,7 +36,9 @@ public class StoryService {
     }
 
     public List<Story> getStoryByKeyword(String keyword) {
-        var list = storyRepository.findAllByKeywordAndStatusOrderByCreatedAtDesc(keyword, StoryStatus.CREATED);
+
+        String partialKeyword = "%" + keyword + "%";
+        var list = storyRepository.findAllByKeywordLikeAndStatusOrderByCreatedAtDesc(partialKeyword, StoryStatus.CREATED);
 
         return list;
     }
