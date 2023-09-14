@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import whatever.headfirst.domain.story.entity.Story;
 import whatever.headfirst.domain.story.entity.enums.StoryStatus;
+import whatever.headfirst.domain.story.exception.InternalServerErrorException;
 import whatever.headfirst.domain.story.exception.StoryNotFoundException;
 import whatever.headfirst.domain.story.repository.StoryRepository;
 
@@ -22,7 +23,7 @@ public class StoryService {
     // 특정 아이디를 가진 사연 가져오기.
     public Story getStoryWithThrow(Long id) {
         var entity = storyRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoryStatus.CREATED);
-        return entity.orElseThrow(StoryNotFoundException::new);
+        return entity.orElseThrow(InternalServerErrorException::new);
 
     }
 
@@ -32,6 +33,14 @@ public class StoryService {
 
         return list;
 
+    }
+
+    public List<Story> getStoryByKeyword(String keyword) {
+
+        String partialKeyword = "%" + keyword + "%";
+        var list = storyRepository.findAllByKeywordLikeAndStatusOrderByCreatedAtDesc(partialKeyword, StoryStatus.CREATED);
+
+        return list;
     }
 
     // 사연 등록.
@@ -46,4 +55,5 @@ public class StoryService {
                 })
                 .orElseThrow(StoryNotFoundException::new);
     }
+
 }

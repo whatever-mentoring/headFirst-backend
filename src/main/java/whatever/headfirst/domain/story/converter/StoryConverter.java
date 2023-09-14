@@ -1,12 +1,12 @@
 package whatever.headfirst.domain.story.converter;
 
 
-import lombok.Builder;
 import whatever.headfirst.domain.common.annotation.Converter;
 import whatever.headfirst.domain.member.domain.Member;
 import whatever.headfirst.domain.story.controller.model.StoryRegisterRequest;
 import whatever.headfirst.domain.story.controller.model.StoryResponse;
 import whatever.headfirst.domain.story.entity.Story;
+import whatever.headfirst.domain.story.entity.enums.StoryStatus;
 import whatever.headfirst.domain.story.exception.StoryNotFoundException;
 
 import java.util.Optional;
@@ -15,7 +15,9 @@ import java.util.Optional;
 
 public class StoryConverter {
 
-    public Story toEntity(StoryRegisterRequest request, Member loginMember) {
+    public Story toEntity(
+            StoryRegisterRequest request, Member loginMember
+    ) {
 
         return Optional.ofNullable(request)
                 .map(it -> {
@@ -23,6 +25,7 @@ public class StoryConverter {
                     return Story.builder()
                             .title(request.getTitle())
                             .content(request.getContent())
+                            .keyword(request.getKeyword())
                             .latitude(request.getLatitude())
                             .longitude(request.getLongitude())
                             .member(loginMember)
@@ -44,7 +47,8 @@ public class StoryConverter {
                             .memberId(loginMember.getId())
                             .title(story.getTitle())
                             .content(story.getContent())
-                            .status(story.getStatus())
+                            .keyword(story.getKeyword())
+                            .status(StoryStatus.CREATED)
                             .createdAt(story.getCreatedAt())
                             .latitude(story.getLatitude())
                             .longitude(story.getLongitude())
@@ -52,6 +56,27 @@ public class StoryConverter {
                 })
                 .orElseThrow(StoryNotFoundException::new);
     }
+
+
+    public StoryResponse toResponse(
+            Story story
+    ) {
+        return Optional.ofNullable(story)
+                .map(it -> {
+                    return StoryResponse.builder()
+                            .id(story.getId())
+                            .title(story.getTitle())
+                            .content(story.getContent())
+                            .keyword(story.getKeyword())
+                            .status(StoryStatus.CREATED)
+                            .createdAt(story.getCreatedAt())
+                            .latitude(story.getLatitude())
+                            .longitude(story.getLongitude())
+                            .build();
+                })
+                .orElseThrow(StoryNotFoundException::new);
+    }
+
 
 
 }

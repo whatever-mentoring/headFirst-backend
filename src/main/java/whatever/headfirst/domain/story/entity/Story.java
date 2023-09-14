@@ -47,11 +47,14 @@ public class Story extends BaseEntity {
     @Column(length = 100, nullable = false)
     private String content;
 
-    @Column(nullable = false)
-    private double latitude;
+    @Column(length = 50, nullable = false)
+    private String keyword;
 
     @Column(nullable = false)
-    private double longitude;
+    private String latitude;
+
+    @Column(nullable = false)
+    private String longitude;
 
     @Column(length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
