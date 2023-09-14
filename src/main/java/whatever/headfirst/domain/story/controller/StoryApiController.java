@@ -35,15 +35,25 @@ public class StoryApiController {
 
         var response = storyBusiness.register(request);
 
-        return ApiSuccessResponse.result(HttpStatus.CREATED, response);
+        return ApiSuccessResponse.result(HttpStatus.OK, response);
 
     }
 
-    // 사연 전체 조회.
+    // 특정 유저가 작성한 사연 전체 조회.
     @GetMapping("/search/{memberId}")
     public ResponseEntity<ApiSuccessResponse<List<StoryResponse>>> search(
             @PathVariable Long memberId) {
         var response = storyBusiness.search(memberId);
+
+        return ApiSuccessResponse.result(HttpStatus.OK, response);
+    }
+
+    // 키워드 별 사연 검색
+    @GetMapping("/search")
+    public ResponseEntity<ApiSuccessResponse<List<StoryResponse>>> searchByKeyword(
+            @RequestParam("keyword") String keyword
+    ) {
+        var response = storyBusiness.searchByKeyword(keyword);
 
         return ApiSuccessResponse.result(HttpStatus.OK, response);
     }

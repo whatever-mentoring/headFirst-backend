@@ -44,4 +44,15 @@ public class StoryBusiness {
                 .map(story -> storyConverter.toResponse(story,loginMember))
                 .collect(Collectors.toList());
     }
+
+    public List<StoryResponse> searchByKeyword(String keyword) {
+
+        Member loginMember = MemberContextHolder.getMember();
+
+        var list = storyService.getStoryByKeyword(keyword);
+
+        return list.stream()
+                .map(story -> storyConverter.toResponse(story,loginMember))
+                .collect(Collectors.toList());
+    }
 }

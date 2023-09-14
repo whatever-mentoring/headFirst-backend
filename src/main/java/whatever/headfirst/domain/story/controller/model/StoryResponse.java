@@ -23,11 +23,13 @@ public class StoryResponse {
 
     private String title;
 
+    private String keyword;
+
     private String content;
 
-    private double latitude;
+    private String latitude;
 
-    private double longitude;
+    private String longitude;
 
     private LocalDateTime createdAt;
 
