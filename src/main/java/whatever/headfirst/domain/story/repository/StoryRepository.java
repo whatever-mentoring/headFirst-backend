@@ -19,4 +19,6 @@ public interface StoryRepository extends JpaRepository<Story,Long> {
     // 유효한 편지 리스트
     // select * from store where status = ? order by desc
     List<Story> findAllByMemberIdAndStatusOrderByCreatedAtDesc(Long memberId, StoryStatus status);
+
+    List<Story> findAllByKeywordLikeAndStatusOrderByCreatedAtDesc(String keyword, StoryStatus status);
 }

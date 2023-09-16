@@ -22,9 +22,12 @@ public class StoryRegisterRequest {
     private String content;
 
     @NotNull
-    private double latitude;
+    private String keyword;
 
     @NotNull
-    private double longitude;
+    private String latitude;
+
+    @NotNull
+    private String longitude;
 
 }
