@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,5 +29,12 @@ public class CommentController {
                                                                      @RequestBody @Valid CommentRequest request) {
         Member loginMember = MemberContextHolder.getMember();
         return ApiSuccessResponse.result(HttpStatus.CREATED, commentService.write(loginMember, id, request));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ApiSuccessResponse<CommentResponse>> edit(@PathVariable Long id,
+                                                                    @RequestBody @Valid CommentRequest request) {
+        Member loginMember = MemberContextHolder.getMember();
+        return ApiSuccessResponse.result(HttpStatus.OK, commentService.edit(loginMember, id, request));
     }
 }
