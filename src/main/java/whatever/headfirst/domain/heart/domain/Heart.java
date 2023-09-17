@@ -31,4 +31,13 @@ public class Heart {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "story_id")
     private Story story;
+
+    private Heart(final Member owner, final Story story) {
+        this.owner = owner;
+        this.story = story;
+    }
+
+    public static Heart of(Member owner, Story story) {
+        return new Heart(owner, story);
+    }
 }
