@@ -1,4 +1,4 @@
-package whatever.headfirst.config.jpa.objectmapper;
+package whatever.headfirst.global.config.jpa.objectmapper;
 
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;

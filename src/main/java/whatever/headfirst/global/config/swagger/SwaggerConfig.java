@@ -1,4 +1,4 @@
-package whatever.headfirst.config.swagger;
+package whatever.headfirst.global.config.swagger;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.core.jackson.ModelResolver;
