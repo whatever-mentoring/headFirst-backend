@@ -58,7 +58,8 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(request -> {
                     request.requestMatchers("/auth/**").permitAll();
-                    request.requestMatchers("onboard/**").permitAll();
+                    request.requestMatchers("/onboard/**").permitAll();
+                    request.requestMatchers("/redirect/**").permitAll();
                     request.anyRequest().authenticated();
                 })
                 .addFilterBefore(
