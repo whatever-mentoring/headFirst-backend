@@ -40,10 +40,10 @@ public class StoryApiController {
     }
 
     // 특정 유저가 작성한 사연 전체 조회.
-    @GetMapping("/search/{memberId}")
+    @GetMapping("/search/{storyId}")
     public ResponseEntity<ApiSuccessResponse<List<StoryResponse>>> search(
-            @PathVariable Long memberId) {
-        var response = storyBusiness.search(memberId);
+            @PathVariable Long storyId) {
+        var response = storyBusiness.search(storyId);
 
         return ApiSuccessResponse.result(HttpStatus.OK, response);
     }
@@ -54,6 +54,17 @@ public class StoryApiController {
             @RequestParam("keyword") String keyword
     ) {
         var response = storyBusiness.searchByKeyword(keyword);
+
+        return ApiSuccessResponse.result(HttpStatus.OK, response);
+    }
+
+    @GetMapping("/in-radius")
+    public ResponseEntity<ApiSuccessResponse<List<StoryResponse>>> findStoriesWithinRadius(
+            @RequestParam("latitude") double latitude,
+            @RequestParam("longitude") double longitude,
+            @RequestParam("radius") double radius
+    ) {
+        var response = storyBusiness.findStoriesWithinRadius(latitude, longitude, radius);
 
         return ApiSuccessResponse.result(HttpStatus.OK, response);
     }

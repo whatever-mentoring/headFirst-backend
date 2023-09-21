@@ -3,6 +3,7 @@ package whatever.headfirst.domain.story.business;
 
 import lombok.RequiredArgsConstructor;
 import whatever.headfirst.domain.common.annotation.Business;
+import whatever.headfirst.domain.heart.controller.model.HeartResponse;
 import whatever.headfirst.domain.member.domain.Member;
 import whatever.headfirst.domain.story.controller.model.StoryRegisterRequest;
 import whatever.headfirst.domain.story.controller.model.StoryResponse;
@@ -10,7 +11,6 @@ import whatever.headfirst.domain.story.converter.StoryConverter;
 import whatever.headfirst.domain.story.service.StoryService;
 import whatever.headfirst.global.holder.MemberContextHolder;
 
-import java.awt.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,11 +34,11 @@ public class StoryBusiness {
 
     }
 
-    public List<StoryResponse> search(Long memberId) {
+    public List<StoryResponse> search(Long storyId) {
 
         Member loginMember = MemberContextHolder.getMember();
 
-        var list = storyService.getStoryByMemberId(memberId);
+        var list = storyService.getStoryByStoryId(storyId);
 
         return list.stream()
                 .map(story -> storyConverter.toResponse(story,loginMember))
@@ -54,5 +54,15 @@ public class StoryBusiness {
         return list.stream()
                 .map(story -> storyConverter.toResponse(story,loginMember))
                 .collect(Collectors.toList());
+    }
+
+    public List<StoryResponse> findStoriesWithinRadius(double latitude, double longitude, double radius) {
+
+        var list = storyService.findStoriesWithinRadius(latitude,longitude, radius);
+
+        return list.stream()
+                .map(storyConverter::toResponse)
+                .collect(Collectors.toList());
+
     }
 }

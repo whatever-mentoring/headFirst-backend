@@ -1,5 +1,7 @@
 package whatever.headfirst.domain.comment.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class Comment extends BaseEntity {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "story_id")
     private Story story;

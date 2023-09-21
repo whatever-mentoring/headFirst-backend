@@ -1,4 +1,4 @@
-package whatever.headfirst.domain.heart.domain;
+package whatever.headfirst.domain.heart.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,16 +8,24 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+import whatever.headfirst.domain.common.BaseEntity;
 import whatever.headfirst.domain.member.domain.Member;
 import whatever.headfirst.domain.story.entity.Story;
 
+@Data
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Heart {
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
+public class Heart extends BaseEntity {
 
     @Id
     @Column(name = "heart_id")
@@ -26,18 +34,15 @@ public class Heart {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
-    private Member owner;
+    private Member ownerId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "story_id")
-    private Story story;
+    private Story storyId;
 
-    private Heart(final Member owner, final Story story) {
-        this.owner = owner;
-        this.story = story;
+    public Long getStoryId() {
+        return storyId.getId(); // Story 객체의 id 필드를 반환합니다.
     }
 
-    public static Heart of(Member owner, Story story) {
-        return new Heart(owner, story);
-    }
+
 }

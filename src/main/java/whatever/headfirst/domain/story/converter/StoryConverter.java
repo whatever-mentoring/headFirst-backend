@@ -1,6 +1,7 @@
 package whatever.headfirst.domain.story.converter;
 
 
+import whatever.headfirst.domain.comment.dto.CommentResponse;
 import whatever.headfirst.domain.common.annotation.Converter;
 import whatever.headfirst.domain.member.domain.Member;
 import whatever.headfirst.domain.story.controller.model.StoryRegisterRequest;
@@ -12,7 +13,6 @@ import whatever.headfirst.domain.story.exception.StoryNotFoundException;
 import java.util.Optional;
 
 @Converter
-
 public class StoryConverter {
 
     public Story toEntity(
@@ -52,9 +52,11 @@ public class StoryConverter {
                             .createdAt(story.getCreatedAt())
                             .latitude(story.getLatitude())
                             .longitude(story.getLongitude())
+                            .comments(story.getComments())
+                            .heartCount(story.getHeartCount()) // 0으로 초기화
                             .build();
-                })
-                .orElseThrow(StoryNotFoundException::new);
+                            })
+                            .orElseThrow(StoryNotFoundException::new);
     }
 
 
