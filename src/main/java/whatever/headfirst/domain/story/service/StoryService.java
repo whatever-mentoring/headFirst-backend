@@ -22,14 +22,15 @@ public class StoryService {
 
     // 특정 아이디를 가진 사연 가져오기.
     public Story getStoryWithThrow(Long id) {
+
         var entity = storyRepository.findFirstByIdAndStatusOrderByIdDesc(id, StoryStatus.CREATED);
         return entity.orElseThrow(InternalServerErrorException::new);
 
     }
 
     // 특정 유저가 작성한 모든 사연 가져오기.
-    public List<Story> getStoryByMemberId(Long memberId) {
-        var list = storyRepository.findAllByMemberIdAndStatusOrderByCreatedAtDesc(memberId, StoryStatus.CREATED);
+    public List<Story> getStoryByStoryId(Long storyId) {
+        var list = storyRepository.findAllByIdAndStatusOrderByCreatedAtDesc(storyId, StoryStatus.CREATED);
 
         return list;
 
@@ -54,6 +55,12 @@ public class StoryService {
                     return storyRepository.save(it);
                 })
                 .orElseThrow(StoryNotFoundException::new);
+    }
+
+    public List<Story> findStoriesWithinRadius(double latitude, double longitude, double radius) {
+        var list = storyRepository.findStoriesWithinRadius(latitude, longitude, radius);
+
+        return list;
     }
 
 }

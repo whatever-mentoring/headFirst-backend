@@ -5,11 +5,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import whatever.headfirst.domain.comment.domain.Comment;
+import whatever.headfirst.domain.comment.dto.CommentResponse;
 import whatever.headfirst.domain.member.domain.Member;
 import whatever.headfirst.domain.story.entity.enums.StoryStatus;
 
 import java.awt.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -30,6 +33,10 @@ public class StoryResponse {
     private String latitude;
 
     private String longitude;
+
+    private List<Comment> comments;
+
+    private Integer heartCount;
 
     private LocalDateTime createdAt;
 
