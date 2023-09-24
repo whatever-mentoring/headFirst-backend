@@ -23,18 +23,19 @@ import whatever.headfirst.global.payload.ApiSuccessResponse;
 public class CommentController {
 
     private final CommentService commentService;
+    private final MemberContextHolder holder;
 
     @PostMapping("/{id}")
     public ResponseEntity<ApiSuccessResponse<CommentResponse>> write(@PathVariable Long id,
                                                                      @RequestBody @Valid CommentRequest request) {
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
         return ApiSuccessResponse.result(HttpStatus.CREATED, commentService.write(loginMember, id, request));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiSuccessResponse<CommentResponse>> edit(@PathVariable Long id,
                                                                     @RequestBody @Valid CommentRequest request) {
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
         return ApiSuccessResponse.result(HttpStatus.OK, commentService.edit(loginMember, id, request));
     }
 }

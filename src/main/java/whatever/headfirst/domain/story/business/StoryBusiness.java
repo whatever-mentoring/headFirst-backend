@@ -20,11 +20,12 @@ public class StoryBusiness {
 
     private final StoryService storyService;
     private final StoryConverter storyConverter;
+    private final MemberContextHolder holder;
 
     public StoryResponse register(
             StoryRegisterRequest storyRegisterRequest
     ) {
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
         //req -> entity -> save -> response.
         var entity = storyConverter.toEntity(storyRegisterRequest, loginMember);
         var newEntity = storyService.register(entity);
@@ -36,7 +37,7 @@ public class StoryBusiness {
 
     public List<StoryResponse> search(Long storyId) {
 
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
 
         var list = storyService.getStoryByStoryId(storyId);
 
@@ -47,7 +48,7 @@ public class StoryBusiness {
 
     public List<StoryResponse> searchByKeyword(String keyword) {
 
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
 
         var list = storyService.getStoryByKeyword(keyword);
 

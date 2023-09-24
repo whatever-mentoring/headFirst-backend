@@ -19,12 +19,12 @@ public class HeartBusiness {
 
     private final HeartConverter heartConverter;
     private final HeartService heartService;
-
+    private final MemberContextHolder holder;
     private final StoryService storyService;
 
     public HeartResponse heart(Long storyId) {
 
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
         List<Story> stories = storyService.getStoryByStoryId(storyId);
 
         if (!stories.isEmpty()) {
@@ -44,7 +44,7 @@ public class HeartBusiness {
     }
 
     public HeartResponse unHeart(Long storyId) {
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
         List<Story> stories = storyService.getStoryByStoryId(storyId);
 
         if (!stories.isEmpty()) {

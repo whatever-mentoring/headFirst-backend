@@ -25,13 +25,13 @@ public class HeartService {
 
     private final HeartRepository heartRepository;
     private final StoryService storyService;
-
+    private final MemberContextHolder holder;
     private final StoryRepository storyRepository;
 
     @Transactional
     public Heart heart(Heart heart) {
 
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
         List<Story> stories = storyService.getStoryByStoryId(heart.getStoryId());
 
         if (!stories.isEmpty()) {
@@ -57,7 +57,7 @@ public class HeartService {
 
     public void unHeart(Heart heart) {
 
-        Member loginMember = MemberContextHolder.getMember();
+        Member loginMember = holder.getMember();
         List<Story> stories = storyService.getStoryByStoryId(heart.getStoryId());
 
         if (!stories.isEmpty()) {
