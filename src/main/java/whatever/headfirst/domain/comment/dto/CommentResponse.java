@@ -16,9 +16,9 @@ public class CommentResponse {
     private String content;
     private Long memberUuid;
     private Long storyId;
-    private LocalDateTime createdAt;
+    private String createdAt;
 
-    public CommentResponse(Long commentId, String content, Long memberUuid, Long storyId, LocalDateTime createdAt) {
+    public CommentResponse(Long commentId, String content, Long memberUuid, Long storyId, String createdAt) {
         this.commentId = commentId;
         this.content = content;
         this.memberUuid = memberUuid;

@@ -38,7 +38,7 @@ public class StoryResponse {
 
     private Integer heartCount;
 
-    private LocalDateTime createdAt;
+    private String createdAt;
 
     private StoryStatus status;
 }

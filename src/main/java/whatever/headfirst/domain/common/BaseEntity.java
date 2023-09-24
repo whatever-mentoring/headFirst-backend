@@ -13,6 +13,8 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @MappedSuperclass
@@ -28,4 +30,11 @@ public abstract class BaseEntity {
 
     @LastModifiedDate
     private LocalDateTime modifiedAt;
+
+    public String getCreatedAt() {
+        ZoneId koreaZoneId = ZoneId.of("Asia/Seoul");
+        LocalDateTime koreaTime = createdAt.atZone(koreaZoneId).toLocalDateTime();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd HH:mm");
+        return koreaTime.format(formatter);
+    }
 }
